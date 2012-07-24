@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tournament Poker Timer</title>
+	<meta name="description" content="A tournament poker timer and nothing else. Simple to configure or use the defaults. Works on computers and phones. Synchronize your games between different devices. Bell sounds when the level changes in most browsers.">
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<link href="css/poker.css" rel="stylesheet" type="text/css">
+	<!--[if lte IE 8]>
+		<link href="css/ie.css" rel="stylesheet" type="text/css">
+	<![endif]-->
+	
+</head>
+<body>
+<div id="start">
+	<h1>Tournament Poker Timer</h1>
+	
+	<div class="tabs">
+		<div class="local">Recent Games</div>
+		<div class="new-game">New Game</div>
+		<div class="public">Join a Game</div>
+	</div>
+	
+	<div class="tab-content">
+		<div class="local panel">
+			<ul id="local_games" class="game_list"><li>No games in progress.</li></ul>
+		</div>
+		
+		<div id="start_form" class="new-game panel">
+			<div class="time">
+				Blind Time: <br/>
+				<input type="text" size="4" name="time" id="blind_time" value="10:00">
+			</div>
+			<div class="games">
+				<label>Games:</label><br/>
+				<textarea class="game" id="games" name="games" rows="4" cols="20">Hold 'Em
+Omaha</textarea>
+				<small>(one per line)</small>
+			</div>
+			<div class="start">
+				<button id="new_game">Start</button><br>
+			</div>
+			<div class="show-hide-advanced">
+				<a href="#" id="show_advanced" class="no-advanced">More Options</a>
+				<a href="#" id="hide_advanced" class="advanced">Fewer Options</a>
+			</div>
+			<div class="advanced">
+				<label>title: <input type="text" size="10" name="title" id="new_game_title" value="No Title"></label>
+				<div class="blinds">
+					<textarea class="blinds" id="blinds" name="blinds" rows="20" cols="20">25/50
+25/50
+50/100
+75/150
+100/200
+-
+150/300
+200/400
+300/600
+400/800
+500/1000
+-
+800/1600
+1000/2000
+1500/3000
+2000/4000
+3000/6000
+4000/8000</textarea>
+				</div>
+			</div>
+			<hr>
+			<div class="restore">
+				<a href="#" id="restore_defaults">Restore Defaults</a>
+				<a href="#" id="restore_last">Restore From Last Game</a>
+			</div>
+		</div>
+		<div class="public panel">
+			<form id="join_public_game">
+				<label>Game name: <input type="text" id="public_game_name"/></label> <input type="submit" value="Join"/>
+			</form>
+			<small>The game name is in the bottom right corner of the control bar of a public game.</small>
+			<p id="public_feedback"></p>
+		</div>
+	</div>
+	<div class="copyright">
+		&copy; 2011 Stu Kabakoff - <a href="http://bitbucket.org/sakabako/pokertimer" target="_blank">Get the source</a>
+
+	</div>
+</div>
+<div id="game">
+	<div id="panels">
+		<div id="hud">
+			<a href="/pokertimer" class="back-to-home">Back to home</a>
+			<div id="toolbar">
+				<a href="#" class="break button" title="Pause"><span>Pause</span></a>
+				<a href="#" class="break-next button" title="Break Next"><span>Break Next</span></a>
+				<a href="#" class="advance button" title="Add 30 seconds"><span>Add 30 Seconds</span></a>
+				<a href="#" class="goback button" title="Subtract 30 seconds"><span>Subtract 30 Seconds</span></a>
+				<a href="#" class="sync button" title="Sync"><span>Sync</span></a>
+			</div>
+			<div id="info">
+				<div class="blinds"></div>
+				<div><div class="games"></div></div>
+				<div class="name"></div>
+			</div>
+			<div class="about">
+				&copy; 2011 Stu Kabakoff - <a href="http://bitbucket.org/sakabako/pokertimer" target="_blank">Get the source</a>
+			</div>
+			<a href="#" class="bell button" title="Toggle Bell"><span>Toggle Bell</span></a>
+		</div>
+	</div>
+	<div id="curtain"></div>
+</div>
+<audio id="bell" autobuffer="true">
+	<source src="audio/Goblet_G_Medium.ogg" type="audio/ogg">
+	<source src="audio/Goblet_G_Medium.mp3" type="audio/mp3">
+	<source src="audio/Goblet_G_Medium.wav" type="audio/wav">
+</audio>
+
+<script type="text/html" id="level-template">
+ 	<div class="level">
+		<div class="time" data-bind="text: time"></div>
+		<div class="game" data-bind="text: game"></div>
+		<div class="blinds" data-bind="text: blinds"></div>
+	</div>
+</script>
+
+<script type="text/html" id="game-template">
+	<li class="game">
+		<div class="name" data-bind="text: name"></div>
+		<div class="state" data-bind="text: currentBlinds"></div>
+	</li>
+</script>
+
+<script type="text/javascript" src="lib/knockout.js"></script>
+<script type="text/javascript" src="lib/require.js"></script>
+<script type="text/javascript">
+	requirejs.config({
+	     baseUrl: './'
+	});
+	require(['app/manager'], function ( manager ) {
+		manager.start();
+	});
+</script>
+
+</body>
+</html>
