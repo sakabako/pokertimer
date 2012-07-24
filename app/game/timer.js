@@ -6,12 +6,12 @@ define(function(requre, exports, module) {
 	function Level( properties ) {
 		this.totalTime = properties.totalTime;
 		this.game = properties.game;
-		this.blinds = properties.game;
+		this.blinds = properties.state;
 		this.time = properties.time || properties.totalTime;
 		
-		this.emitter = new EventEmitter();
-		this.on = this.emitter.on.bind(this);
-		this.off = this.emitter.removeListener.bind(this);
+		this.emitter = new MicroEvent();
+		this.on = this.emitter.on.bind(this.emitter);
+		this.off = this.emitter.off.bind(this.emitter);
 	}
 	
 	Level.prototype.setTime = function( newTime ) {
@@ -34,16 +34,15 @@ define(function(requre, exports, module) {
 		
 		this.levels = levels;
 		
-		this.currentLevel;
+		this.currentLevel = levels[0];
 		this.currentLevelIndex;
 		this.levelStartTime;
 		this.timeRemainingInCurrentLevel;
 		
 		
-		this.emitter = new EventEmitter();
-		
+		this.emitter = new MicroEvent();
 		this.on = this.emitter.on.bind(this.emitter);
-		this.off = this.emitter.removeListener.bind(this.emitter);
+		this.off = this.emitter.off.bind(this.emitter);
 		
 	}
 	
@@ -135,9 +134,17 @@ define(function(requre, exports, module) {
 	exports.begetLevel = function( level ) {
 		return new Level( level );
 	};
-	exports.beget = function( levels ) {
-		levels = levels.map(exports.begetLevel);
-		return new Timer( levels );
+	exports.beget = function( dto ) {
+		var levels = dto.state.map(exports.begetLevel);
+		var timer = new Timer( levels );
+		
+		timer.name = dto.name;
+		timer.blinds = dto.blinds;
+		timer.syncToken = 0;
+		timer.blindTime = dto.blindTime;
+		timer.breakLength = dto.breakLength;
+		
+		return timer;
 	}
 	
 })

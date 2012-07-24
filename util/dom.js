@@ -1,6 +1,6 @@
 define( function( require, exports, module ) {
 	
-	exports.get = function( element, selector ) {
+	exports.get = function( selector, element ) {
 		return (element || document).querySelector( selector );
 	};
 	

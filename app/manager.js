@@ -3,7 +3,7 @@ define( function( require, exports, module ) {
 	var dom = require('../util/dom');
 	//var begetInputUI = require('./inputUI').beget;
 	var begetTimer = require('./game/timer').beget;
-	var begetTimerViewModel = require('./game/timerViewModel').beget;
+	var begetTimerViewModel = require('./game/timerViewModel').begetTimerViewModel;
 	
 	var newGameUI;
 	var gameList;
@@ -29,13 +29,15 @@ define( function( require, exports, module ) {
 		//newGameUI = begetInputUI( dom.get('#newGameForm') );
 		//newGameUI.on('beginGame', addGame );
 		
-		var localTimers = JSON.parse( localStorage.getItem( 'PokerGames' ) || '[]' ).map( begetTimer ).map( begetTimerViewModel );
+		var localTimers = JSON.parse( localStorage.getItem( 'PokerGames' ) || '[]' );
+		localTimers = localTimers.map( begetTimer );
+		localTimers = localTimers.map( begetTimerViewModel );
 		
 		timers = ko.observableArray( localTimers );
 		
 		gamesContainer = dom.get('#local-games');
 		
-		ko.applyBindings( gamesContainer, timers );
+		ko.applyBindings( timers, gamesContainer );
 		
 	};
 })
