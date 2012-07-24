@@ -1,7 +1,7 @@
 define(function( require, exports, module ) {
-	var EventEmitter = require('./events');
+	var EventEmitter = require('./events').MicroEvent;
 	
-	var emitter = new EventEmitter();
+	var emitter = new MicroEvent();
 	
 	
 	function setTimeAndEmitUpdate(data) {

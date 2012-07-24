@@ -1,3 +1,4 @@
+define(function( require, exports, module ) {
 /**
  * MicroEvent - to make any js object an event emitter (server or browser)
  * 
@@ -9,7 +10,8 @@
  *   - make it safer to use
 */
 
-var MicroEvent	= function(){}
+function MicroEvent(){};
+
 MicroEvent.prototype	= {
 	on	: function(event, fct){
 		this._events = this._events || {};
@@ -33,7 +35,7 @@ MicroEvent.prototype	= {
 		var slicedEvents = this._events[event].slice();
 		var args = Array.prototype.slice.call(arguments, 1);
 		for(var i = 0; i < this._events[event].length; i++){
-			slicedEvents[i].apply(this, args)
+			slicedEvents[i].apply(this, args);
 		}
 	}
 };
@@ -46,13 +48,14 @@ MicroEvent.prototype	= {
  * @param {Object} the object which will support MicroEvent
 */
 MicroEvent.mixin	= function(destObject){
-	var props	= ['on', 'off', 'emit'];
+	var props	= ['on', 'off', 'one', 'emit'];
 	for(var i = 0; i < props.length; i ++){
 		destObject.prototype[props[i]]	= MicroEvent.prototype[props[i]];
 	}
-}
+};
 
 // export in common js
 if( typeof module !== "undefined" && ('exports' in module)){
-	module.exports	= MicroEvent
+	exports.MicroEvent = MicroEvent;
 }
+});

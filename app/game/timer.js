@@ -1,7 +1,7 @@
 define(function(requre, exports, module) {
 	
-	var EventEmitter = require('../../util/events');
-	//var timeOffset = require('../../util/timeOffset');
+	var MicroEvent = require('util/events').MicroEvent;
+	//var timeOffset = require('util/timeOffset');
 	
 	function Level( properties ) {
 		this.totalTime = properties.totalTime;
