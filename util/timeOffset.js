@@ -1,5 +1,5 @@
 define(function( require, exports, module ) {
-	var EventEmitter = require('./events').MicroEvent;
+	var MicroEvent = require('./events').MicroEvent;
 	
 	var emitter = new MicroEvent();
 	
@@ -22,5 +22,5 @@ define(function( require, exports, module ) {
 	exports.ms = 0;
 	
 	exports.on = emitter.on.bind(emitter);
-	exports.off = emitter.removeListener.bind(emitter);
+	exports.off = emitter.off.bind(emitter);
 });

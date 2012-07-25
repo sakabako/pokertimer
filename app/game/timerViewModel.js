@@ -6,8 +6,9 @@ define( function( require, exports, module ) {
 		this.timeRemaining = ko.observable(level.time);
 		this.active = ko.observable(false);
 		
+		var that = this;
 		level.on('timeChange', function(newTime) {
-			this.timeRemaining(newTime);
+			that.timeRemaining(newTime);
 		});
 		
 		level.on('start', function() {
@@ -22,8 +23,11 @@ define( function( require, exports, module ) {
 		
 		this.timer = timer;
 		this.levels = ko.observableArray( timer.levels.map( exports.begetLevelViewModel ) );
+		console.log(timer.levels, this.levels);
+		this.currentLevel = ko.observable( timer.currentLevel );
 		this.currentLevelIndex = ko.observable( timer.currentLevelIndex );
 		this.currentBlinds = ko.observable( timer.currentLevel.blinds );
+		this.currentGame = ko.observable( timer.currentLevel.game );
 		
 		timer.on( 'levelAdd', function( level, index ) {
 			var newLevelVM = new LevelViewModel( level );
@@ -36,7 +40,9 @@ define( function( require, exports, module ) {
 		
 		timer.on( 'levelChange', function( newLevelIndex, oldLevelIndex ) {
 			this.currentLevelIndex( newLevelIndex );
+			this.currentLevel( this.levels[newLevelIndex] );
 			this.currentBlinds( timer.currentLevel.blinds );
+			this.currentGame( timer.currentLevel.game );
 			//this.scrollCurrentLevelToMiddle();
 		});
 		

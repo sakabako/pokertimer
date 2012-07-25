@@ -24,7 +24,13 @@
 	
 	<div class="tab-content">
 		<div class="local panel">
-			<ul id="local-games" class="game_list"><li>No games in progress.</li></ul>
+			<ul id="local-games" class="game_list" data-bind="foreach: timers()">
+				<li>
+					<span class="game" data-bind="text: currentGame"></span>
+					<span class="blinds" data-bind="text: currentBlinds"></span>
+					<span class="time" data-bind="text: currentLevel.timeRemaining"></span>
+				</li>
+			</ul>
 		</div>
 		
 		<div id="start_form" class="new-game panel">
@@ -123,13 +129,6 @@ Omaha</textarea>
 		<div class="game" data-bind="text: game"></div>
 		<div class="blinds" data-bind="text: blinds"></div>
 	</div>
-</script>
-
-<script type="text/html" id="game-template">
-	<li class="game">
-		<div class="name" data-bind="text: name"></div>
-		<div class="state" data-bind="text: currentBlinds"></div>
-	</li>
 </script>
 
 <script type="text/javascript" src="lib/knockout.js"></script>

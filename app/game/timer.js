@@ -1,12 +1,12 @@
 define(function(requre, exports, module) {
 	
 	var MicroEvent = require('util/events').MicroEvent;
-	//var timeOffset = require('util/timeOffset');
+	var timeOffset = require('util/timeOffset');
 	
 	function Level( properties ) {
 		this.totalTime = properties.totalTime;
 		this.game = properties.game;
-		this.blinds = properties.state;
+		this.blinds = properties.blinds;
 		this.time = properties.time || properties.totalTime;
 		
 		this.emitter = new MicroEvent();
@@ -16,7 +16,7 @@ define(function(requre, exports, module) {
 	
 	Level.prototype.setTime = function( newTime ) {
 		this.time = newTime;
-		this.emitter.emit('timeChange');
+		this.emitter.emit( 'timeChange', newTime );
 	};
 	Level.prototype.start = function() {
 		this.emitter.emit('start');
@@ -33,12 +33,10 @@ define(function(requre, exports, module) {
 		this.originalStartTime;
 		
 		this.levels = levels;
-		
+		console.log(levels);
 		this.currentLevel = levels[0];
-		this.currentLevelIndex;
-		this.levelStartTime;
-		this.timeRemainingInCurrentLevel;
-		
+		this.currentLevelIndex = 0;
+		this.levelStartTime;		
 		
 		this.emitter = new MicroEvent();
 		this.on = this.emitter.on.bind(this.emitter);
@@ -80,6 +78,7 @@ define(function(requre, exports, module) {
 	};
 		
 	Timer.prototype.start = function() {
+		console.log('starting');
 		if (this.timeout) { return; }
 		
 		if (!this.originalStartTime) {
