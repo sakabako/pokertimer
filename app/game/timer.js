@@ -4,7 +4,7 @@ define(function(requre, exports, module) {
 	var timeOffset = require('util/timeOffset');
 	
 	function Level( properties ) {
-		this.totalTime = properties.totalTime;
+		this.duration = properties.duration;
 		this.game = properties.game;
 		this.blinds = properties.blinds;
 		this.time = properties.time || properties.totalTime;
@@ -21,7 +21,7 @@ define(function(requre, exports, module) {
 	Level.prototype.start = function() {
 		this.emitter.emit('start');
 	};
-	Level.prototype.start = function() {
+	Level.prototype.end = function() {
 		this.emitter.emit('end');
 	};
 	
@@ -33,7 +33,6 @@ define(function(requre, exports, module) {
 		this.originalStartTime;
 		
 		this.levels = levels;
-		console.log(levels);
 		this.currentLevel = levels[0];
 		this.currentLevelIndex = 0;
 		this.levelStartTime;		
@@ -45,17 +44,17 @@ define(function(requre, exports, module) {
 	}
 	
 	Timer.prototype.updateState = function() {
-		var timeInThisLevel = (new Date()) - this.levelStartTime + timeOffset.ms;
+		var timeSinceLastUpdate = (new Date()) - this.lastUpdate;
 		var currentLevelIndexAtStart = this.levels.indexOf(this.currentLevel);
 		
-		while (timeInThisLevel > this.currentLevel.duration) {
+		while (timeSinceLastUpdate > this.currentLevel.duration) {
 			// time to advance one or more levels
 			var nextLevelIndex = (nextLevelIndex || currentLevelIndexAtStart) + 1;
 			var timeLeft = this.currentLevel.duration - timeInThisLevel;
 			
 			// end the current level
 			this.currentLevel.setTime( 0 );
-			this.emitter.emit('timeUpdate', 0, this.currentLevel);
+			this.emitter.emit('timeChange', 0, this.currentLevel);
 			if (nextLevelIndex === this.levels.length) {
 				this.end();
 				return;
@@ -65,7 +64,7 @@ define(function(requre, exports, module) {
 			this.currentLevel = this.levels[nextLevelIndex];
 			
 			// continue the while loop
-			timeInThisLevel -= timeLeft;
+			timeSinceLastUpdate -= timeLeft;
 		}
 		
 		if (nextLevelIndex) {
@@ -73,12 +72,13 @@ define(function(requre, exports, module) {
 			this.emitter.emit('levelChange', currentLevelIndexAtStart, nextLevelIndex);
 		}
 		
-		this.currentLevel.setTime( timeLeft );
-		this.emitter.emit('stateupdate', timeLeft, this.currentLevelIndex);
+		var timeRemaining = this.currentLevel.time - timeSinceLastUpdate
+		this.currentLevel.setTime( timeRemaining );
+		this.lastUpdate = new Date();
+		this.emitter.emit('timeChange', timeRemaining, this.currentLevel);
 	};
 		
 	Timer.prototype.start = function() {
-		console.log('starting');
 		if (this.timeout) { return; }
 		
 		if (!this.originalStartTime) {
@@ -92,8 +92,10 @@ define(function(requre, exports, module) {
 		var that = this;
 		function update() {
 			that.updateState();
-			var timeSinceStart = that.originalStartTime - (new Date()) + timeOffset.ms;
-			var offset = timeSinceStart % 1000;
+			var offset = that.currentLevel.time % 1000;
+			if (offset < 10) {
+				offset += 1000;
+			}
 			that.timeout = setTimeout( update, offset );
 		}
 		this.emitter.emit('start');
@@ -128,7 +130,7 @@ define(function(requre, exports, module) {
 	Timer.prototype.insertAtIndex = function( newLevel, index ) {
 		this.levels.splice( index, 0, newLevel );
 		this.emitter.emit( 'levelAdd', newLevel, index );
-	}
+	};
 	
 	exports.begetLevel = function( level ) {
 		return new Level( level );
@@ -139,11 +141,12 @@ define(function(requre, exports, module) {
 		
 		timer.name = dto.name;
 		timer.blinds = dto.blinds;
-		timer.syncToken = 0;
-		timer.blindTime = dto.blindTime;
-		timer.breakLength = dto.breakLength;
+		timer.syncToken = dto.syncToken || 0;
+		timer.blindDuration = dto.blindDuration;
+		timer.breakDuration = dto.breakDuration;
+		timer.lastUpdate = dto.lastUpdate || new Date();
 		
 		return timer;
-	}
+	};
 	
 })

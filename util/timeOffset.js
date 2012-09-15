@@ -3,7 +3,6 @@ define(function( require, exports, module ) {
 	
 	var emitter = new MicroEvent();
 	
-	
 	function setTimeAndEmitUpdate(data) {
 		var serverTime = parseInt(data,10);
 		if (serverTime) {
@@ -17,7 +16,7 @@ define(function( require, exports, module ) {
 	exports.refresh = function() {
 		var rand = Math.random();
 		$.get('php/time.php', {rand:rand}, setTimeAndEmitUpdate);
-	}
+	};
 	
 	exports.ms = 0;
 	

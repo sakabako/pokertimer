@@ -1,5 +1,7 @@
 define( function( require, exports, module ) {
 	
+	var timeDisplay = require('../../util/timeDisplay');
+	
 	function LevelViewModel( level ) {
 		this.blinds = level.blinds;
 		this.game = level.game;
@@ -8,7 +10,7 @@ define( function( require, exports, module ) {
 		
 		var that = this;
 		level.on('timeChange', function(newTime) {
-			that.timeRemaining(newTime);
+			that.timeRemaining( timeDisplay.msToString(newTime) );
 		});
 		
 		level.on('start', function() {
@@ -23,29 +25,35 @@ define( function( require, exports, module ) {
 		
 		this.timer = timer;
 		this.levels = ko.observableArray( timer.levels.map( exports.begetLevelViewModel ) );
-		console.log(timer.levels, this.levels);
 		this.currentLevel = ko.observable( timer.currentLevel );
 		this.currentLevelIndex = ko.observable( timer.currentLevelIndex );
+		this.currentLevelTimeRemaining = ko.observable( timer.currentLevel.time );
 		this.currentBlinds = ko.observable( timer.currentLevel.blinds );
 		this.currentGame = ko.observable( timer.currentLevel.game );
 		
+		var that = this;
+		
 		timer.on( 'levelAdd', function( level, index ) {
 			var newLevelVM = new LevelViewModel( level );
-			this.levels.splice(index, 0, newLevelVM);
+			that.levels.splice(index, 0, newLevelVM);
 		});
 		
 		timer.on( 'levelRemove', function( level, index ) {
-			this.levels.splice(index, 1);
+			that.levels.splice(index, 1);
 		});
 		
 		timer.on( 'levelChange', function( newLevelIndex, oldLevelIndex ) {
-			this.currentLevelIndex( newLevelIndex );
-			this.currentLevel( this.levels[newLevelIndex] );
-			this.currentBlinds( timer.currentLevel.blinds );
-			this.currentGame( timer.currentLevel.game );
+			that.currentLevelIndex( newLevelIndex );
+			that.currentLevel( this.levels[newLevelIndex] );
+			that.currentBlinds( timer.currentLevel.blinds );
+			that.currentGame( timer.currentLevel.game );
 			//this.scrollCurrentLevelToMiddle();
 		});
 		
+		timer.on( 'timeChange', function( newTime ) {
+			that.currentLevelTimeRemaining( timeDisplay.msToString(newTime) );
+		});
+				
 	}
 	
 	

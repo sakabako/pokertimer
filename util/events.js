@@ -57,5 +57,6 @@ MicroEvent.mixin	= function(destObject){
 // export in common js
 if( typeof module !== "undefined" && ('exports' in module)){
 	exports.MicroEvent = MicroEvent;
+	exports.mixin = MicroEvent.mixin;
 }
 });
