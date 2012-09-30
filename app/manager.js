@@ -31,6 +31,14 @@ define( function( require, exports, module ) {
 		
 		gamesContainer = dom.get('#local-games');
 		
+		var tabWidget = dom.begetTabWidget( dom.get('#start .tabs'), dom.get('#start .tab-content') );
+		
+		if (localTimers.length) {
+			tabWidget.select('.local');
+		} else {
+			tabWidget.select('.new-game');
+		}
+		
 		ko.applyBindings( {timers: timers}, gamesContainer );
 				
 	};

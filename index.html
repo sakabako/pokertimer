@@ -19,9 +19,9 @@
 	<h1>Tournament Poker Timer</h1>
 	
 	<div class="tabs">
-		<div class="local">Recent Games</div>
-		<div class="new-game">New Game</div>
-		<div class="public">Join a Game</div>
+		<div class="local" data-panel=".local">Recent Games</div>
+		<div class="new-game" data-panel=".new-game">New Game</div>
+		<div class="public" data-panel=".public">Join a Game</div>
 	</div>
 	
 	<div class="tab-content">
@@ -135,6 +135,7 @@ Omaha</textarea>
 
 <script type="text/javascript" src="lib/knockout.js"></script>
 <script type="text/javascript" src="lib/require.js"></script>
+<script type="text/javascript" src="lib/jquery.js"></script>
 <script type="text/javascript">
 	requirejs.config({
 	     baseUrl: './'
