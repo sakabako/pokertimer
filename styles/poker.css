@@ -1,0 +1,372 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font-family: Helvetica, FreeSans, sans-serif;
+	max-width: 760px;
+	margin: 0 auto;
+	background-color: black;
+	background-image: url(../images/background.png);
+	 background-size: 50%;
+ 	-moz-background-size: 50%;
+}
+p {
+	margin-top: 1em;
+}
+h1 {
+	clear: both;
+	margin: 0.5em 0;
+	color: white;
+}
+input {
+	font-size: 100%;
+}
+a {
+	color: #333;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+hr {
+	clear: both;
+	margin-top: 1em;
+}
+button {
+	cursor: pointer;
+}
+.copyright {
+	font-size: 50%;
+	margin: 0.5em;
+	color: #666;
+}
+.tabs > * {
+	border: 0.0625em solid #aaa;
+	border-bottom: none;
+	padding: 0.125em 0.5em;
+	border-radius: 0.25em 0.25em 0 0;
+	-webkit-border-radius: 0.25em 0.25em 0 0;
+	-moz-border-radius: 0.25em 0.25em 0 0;
+	margin-right: 0.125em;
+	display: inline-block;
+	cursor: pointer;
+	background-color: #999;
+}
+.tabs > *.selected {
+	background-color: white;
+/* 	border-bottom: 1px solid white; */
+	padding-bottom: 0.1875em;
+	margin-bottom: -0.0625em;
+}
+.tab-content > * {
+	background-color: white;
+	display: none;
+}
+
+
+#start {
+	padding:  0;
+	z-index: 20;
+	font-size: 120%;
+}
+.tab-content {
+	border: 0.0625em solid #aaa;
+	background-color: white;
+}
+.panel {
+	padding: 1em;
+}
+#start_form div.start {
+	margin-bottom: 1em;
+	text-align: right;
+}
+#start_form div.time {
+	float: left;
+	width: 40%;
+	font-size: 2em;
+}
+#start_form div.time input {
+	line-height: 1.2;
+	font-size: 100%;
+}
+#start_form div.blinds {
+	float: left;
+	width: 29%;
+}
+#start_form .games label {
+	font-size: 2em;
+}
+#start_form .show-hide-advanced {
+	clear: both;
+}
+#new_game {
+	background-color: #f7db66;
+	border: 2px solid black;
+	font-size: 2em;
+	padding: 0.25em 1em;
+	border-radius: 1em;
+	-webkit-border-radius: 1em;
+	-moz-border-radius: 1em;
+	margin-bottom: 0.25em;
+	margin-top: 1em;
+}
+#start_form div.games {
+	float: left;
+	width: 29%;
+}
+#start_form textarea {
+	width: 82%;	
+	font-size: 100%;
+	line-height: 1.2;
+	padding: 2px;
+}
+.restore a {
+	color: grey;
+}
+.local.panel {
+	padding: 0;
+}
+.game_list > li {
+	cursor: pointer;
+	list-style-type: none;
+	border-bottom: 0.0625em solid silver;
+	padding: 0.5em 0.5em 0;
+	font-size: 168%;
+}
+.game_list li:hover {
+	background-color: #eee;
+}
+.game_list div.level {
+	display: none;
+	color: black;
+}
+.game_list div.level.current {
+	display: block;
+}
+.game_list div.name {
+	display: inline-block;
+	vertical-align: top;
+	width: 7em;
+	line-height: 2em;
+}
+.game_list div.state {
+	display: inline-block;
+	width: 15em;
+	height: 2.75em;
+	position: relative;
+	color: black;
+	vertical-align: top;
+}
+#game {
+	font-size: 100px;
+	line-height: 1;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: none;
+	overflow: hidden;
+}
+.poker-game {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	color: white;
+}
+.poker-game .level .game,.poker-game .level .time {
+	font-size: 100%;
+}
+.poker-game .level {
+	position: relative;
+	text-align: left;
+}
+.poker-game .level.break {
+}
+.poker-game .time {
+	position: absolute;
+	left: .125em;
+	top: .125em;
+}
+.poker-game .blinds {
+	font-size: 220%;
+	height: 1em;
+	margin: 0;
+	text-align: right;
+}
+.poker-game .game {
+	position: absolute;
+	left: .125em;
+	bottom: .125em;
+	white-space: nowrap;
+}
+#game .poker-game .level {
+	color: #333;
+}
+#game .poker-game .level.current {
+	color: white;
+}
+#game .poker-game .level.previous.played {
+	color: #555;
+}
+#game .poker-game .level.played {
+	color: #333;
+}
+#game .poker-game.tall .level.current {
+	font-size: 145%;
+	position: static;
+}
+#game .poker-game.tall .level.current .time {
+	position: static;
+	float: left;
+	width: 33%;
+	text-align: center;	
+	font-size: 100%;
+}
+#game .poker-game.tall .level.current .game {
+	position: static;
+	width: 66%;
+	float: left;
+	text-align: center;
+	font-size: 100%;
+}
+#game .poker-game.tall .level.current .blinds {
+	text-align: center;
+	clear: both;
+}
+#hud {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	width: 100%;
+	padding: 0;
+	text-align: center;
+	background-color: #aaa;
+/* 	background-color: rgba(150,150,150,0.85); */
+	z-index: 100;
+	border-bottom: 0.125em solid black;
+}
+#hud a.back-to-home {
+	font-size: 25%;
+	display: block;
+	text-align: left;
+	line-height: 1;
+}
+#hud a.button {
+	display: inline-block;
+	vertical-align: bottom;
+	position: relative;
+	width: 11em;
+	height: 11em;
+}
+#toolbar a.button {
+	font-size: 25%;
+}
+#hud a.button.bell {
+	font-size: 20%;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+}
+#hud a.button:active {
+	outline: none;
+}
+#hud a.button:hover {
+	text-decoration: none;
+}
+#hud .button {
+	background-image: url(../images/button-background.png);
+	background-size: 200% 100%;
+	-moz-background-size: 200% 100%;
+	text-decoration: none;
+}
+#hud .button:hover {
+	background-position: 100% 0;
+}
+
+#hud .button span {
+	position: absolute;
+	left: 1em;
+	top: 1em;
+	right: 1em;
+	bottom: 1em;
+	color: transparent;
+	background-image: url(../images/buttons-sprite.png?3);
+	background-size: 200% 500%;
+	-moz-background-size: 200% 500%;
+}
+
+#hud .button.break span {
+	background-position: 0 0;
+}
+.onbreak #hud .button.break span {
+	background-position: -100% 0;
+}
+#hud .button.break-next span {
+	background-position: 0 -300%;
+}
+#hud .button.advance span {
+	background-position: 0 -200%;
+}
+#hud .button.goback span {
+	background-position: -100% -200%;
+}
+#hud .button.sync span {
+	background-position: -100% -100%;
+}
+.syncing #hud .button.sync span {
+	background-position: 0 -100%;
+}
+#hud .button.bell span {
+	background-position: 0 -400%;
+}
+.mute #hud .button.bell span {
+	background-position: 100% -400%;
+}
+
+#info {
+	line-height: 1;
+	font-size: 0.5em;
+	float: right;
+}
+#info > div {
+	padding: 0.33em;
+	text-align: center;
+	white-space: nowrap;
+	float: left;
+	border-top:  0.1em solid #666;
+	border-left: 0.1em solid #666;
+}
+#info .name {
+	display: none;
+}
+.syncing #info .name {
+	display: block;
+}
+#hud .about {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	font-size: 0.25em;
+	margin-left: 1em;
+}
+#curtain {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 10000;
+}
+audio {
+	display: none;
+	position: absolute;
+	z-index: -1;
+}
+#templates {
+	display: none;
+}
