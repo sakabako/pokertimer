@@ -44,7 +44,7 @@ define( function( require, exports, module ) {
 		
 		timer.on( 'levelChange', function( newLevelIndex, oldLevelIndex ) {
 			that.currentLevelIndex( newLevelIndex );
-			that.currentLevel( this.levels[newLevelIndex] );
+			that.currentLevel( that.levels()[newLevelIndex] );
 			that.currentBlinds( timer.currentLevel.blinds );
 			that.currentGame( timer.currentLevel.game );
 			//this.scrollCurrentLevelToMiddle();

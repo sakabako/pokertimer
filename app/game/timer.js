@@ -7,7 +7,7 @@ define(function(requre, exports, module) {
 		this.duration = properties.duration;
 		this.game = properties.game;
 		this.blinds = properties.blinds;
-		this.time = properties.time || properties.totalTime;
+		this.time = properties.time || properties.duration;
 		
 		this.emitter = new MicroEvent();
 		this.on = this.emitter.on.bind(this.emitter);
@@ -46,11 +46,10 @@ define(function(requre, exports, module) {
 	Timer.prototype.updateState = function() {
 		var timeSinceLastUpdate = (new Date()) - this.lastUpdate;
 		var currentLevelIndexAtStart = this.levels.indexOf(this.currentLevel);
-		
-		while (timeSinceLastUpdate > this.currentLevel.duration) {
+		while (timeSinceLastUpdate > this.currentLevel.time) {
 			// time to advance one or more levels
 			var nextLevelIndex = (nextLevelIndex || currentLevelIndexAtStart) + 1;
-			var timeLeft = this.currentLevel.duration - timeInThisLevel;
+			var timeLeft = this.currentLevel.time - timeSinceLastUpdate;
 			
 			// end the current level
 			this.currentLevel.setTime( 0 );
