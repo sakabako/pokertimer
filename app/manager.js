@@ -1,7 +1,7 @@
 define( function( require, exports, module ) {
 	
 	var dom = require('../util/dom');
-	var initInputUI = require('./inputUI').init;
+	//var initInputUI = require('./inputUI').init;
 	var begetTimer = require('./game/timer').beget;
 	var begetTimerViewModel = require('./game/timerViewModel').begetTimerViewModel;
 	var begetTestGame = require('../test/testData').begetGame;
