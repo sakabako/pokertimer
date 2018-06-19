@@ -1,6 +1,4 @@
-FROM php:5.6-apache-jesse
-
-MAINTAINER Paul Redmond
+FROM php:5.6-apache-jessie
 
 COPY . /srv/app
 COPY ./vhost.conf /etc/apache2/sites-available/000-default.conf
